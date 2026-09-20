@@ -57,7 +57,7 @@ namespace SmartDeliveryManagementSystem
                 }
             }
         }
-        public decimal EstimatedCost
+        public virtual decimal EstimatedCost
         {
             get
             {
