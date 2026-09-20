@@ -13,6 +13,20 @@
             // question B
             // Because classes are more suitable for larger data and complex behaviour
             #endregion
+
+            #region Question02
+            // Question A:
+            // Shipment Class
+
+            // Question B:
+            // ExpressShipment Class
+
+            //Question C:
+            // TrackingCode is inherited
+
+            // Question D:
+            // Because it's more reusable, maintainable, and scalable.
+            #endregion
         }
     }
 }
