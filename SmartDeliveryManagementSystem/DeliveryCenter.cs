@@ -4,13 +4,19 @@ using System.Text;
 
 namespace SmartDeliveryManagementSystem
 {
-    class DeliveryCenter
+    struct DeliveryCenter
     {
         private Shipment[] _shipments;
+        public string CenterName { get; set; }
 
-        public DeliveryCenter()
+        public DeliveryCenter() : this("Unknown")
         {
-            _shipments = new Shipment[10];
+
+        }
+        public DeliveryCenter(string centerName)
+        {
+            _shipments = new Shipment[20];
+            CenterName = centerName;
         }
 
         public Shipment this[int index]
@@ -24,7 +30,7 @@ namespace SmartDeliveryManagementSystem
                     return _shipments[index];
                 }
 
-                return default;
+                return default!;
             }
 
             set
@@ -45,27 +51,26 @@ namespace SmartDeliveryManagementSystem
                 if (_shipments is null ||
                     string.IsNullOrWhiteSpace(trackingCode))
                 {
-                    return default;
+                    return default!;
                 }
 
                 foreach (Shipment shipment in _shipments)
                 {
-                    if (shipment.TrackingCode == trackingCode)
+                    if (shipment is not null && shipment.TrackingCode == trackingCode)
                         return shipment;
                 }
 
-                return default;
+                return default!;
             }
         }
 
         public bool AddShipment(Shipment shipment)
         {
-            _shipments ??= new Shipment[10];
+            _shipments ??= new Shipment[20];
 
             for (int i = 0; i < _shipments.Length; i++)
             {
-                if (string.IsNullOrWhiteSpace(
-                        _shipments[i].TrackingCode))
+                if (_shipments[i] is null)
                 {
                     _shipments[i] = shipment;
                     return true;
@@ -74,6 +79,29 @@ namespace SmartDeliveryManagementSystem
 
             return false;
         }
-    }
+        public bool RemoveShipment(string trackingCode)
+        {
+            for (int i = 0; i < _shipments.Length; i++)
+            {
+                if (_shipments[i] is not null && _shipments[i].TrackingCode == trackingCode)
+                {
+                    _shipments[i] = null!;
+                    return true;
+                }
+            }
 
+            return false;
+        }
+        public void PrintAllShipments()
+        {
+            for (int i = 0; i < _shipments!.Length; i++)
+            {
+                if (_shipments[i] != null)
+                {
+                    Console.WriteLine(CenterName);
+                    _shipments[i].PrintShipment();
+                }
+            }
+        }
+    }
 }
